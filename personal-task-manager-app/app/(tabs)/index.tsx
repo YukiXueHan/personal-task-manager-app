@@ -1,6 +1,6 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
-import TaskList from '@/components/TaskList'; // 确保 TaskList 路径正确
+import TaskList from '@/components/TaskList';
 
 export default function HomeScreen() {
   return (

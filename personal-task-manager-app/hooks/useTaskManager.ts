@@ -1,6 +1,5 @@
 import { useState } from 'react';
 
-// 定义任务类型
 export interface Task {
   id: number;
   title: string;
@@ -20,13 +19,13 @@ export const useTaskManager = () => {
     }
 
     const newTask: Task = {
-      id: tasks.length + 1, // 简单的 ID 生成方式
+      id: tasks.length + 1,
       title,
       description,
       status: 'pending',
     };
 
-    setTasks([...tasks, newTask]); // 更新任务列表
+    setTasks([...tasks, newTask]);
   };
 
   return { tasks, addTask };

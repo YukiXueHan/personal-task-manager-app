@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, FlatList, TextInput, Button, Alert } from 'reac
 import { useTaskManager, Task } from '@/hooks/useTaskManager';
 
 const TaskList: React.FC = () => {
-  const { tasks, addTask } = useTaskManager(); // 使用自定义 Hook
+  const { tasks, addTask } = useTaskManager();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
 
@@ -31,7 +31,6 @@ const TaskList: React.FC = () => {
     <View style={styles.container}>
       <Text style={styles.heading}>Task List</Text>
 
-      {/* 任务输入表单 */}
       <View style={styles.form}>
         <TextInput
           style={styles.input}
@@ -48,7 +47,6 @@ const TaskList: React.FC = () => {
         <Button title="Add Task" onPress={handleAddTask} />
       </View>
 
-      {/* 任务列表 */}
       <FlatList
         data={tasks}
         renderItem={renderTask}
