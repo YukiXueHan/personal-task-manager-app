@@ -1,23 +1,22 @@
-import React from 'react';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
-
-// 定义 Task 类型
-interface Task {
-  id: number;
-  title: string;
-  description: string;
-  status: 'pending' | 'completed';
-}
-
-// 模拟任务数据
-const mockTasks: Task[] = [
-  { id: 1, title: 'Task 1', description: 'This is the first task', status: 'pending' },
-  { id: 2, title: 'Task 2', description: 'This is the second task', status: 'completed' },
-  { id: 3, title: 'Task 3', description: 'This is the third task', status: 'pending' },
-];
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, FlatList, TextInput, Button, Alert } from 'react-native';
+import { useTaskManager, Task } from '@/hooks/useTaskManager';
 
 const TaskList: React.FC = () => {
-  // 渲染每个任务的组件
+  const { tasks, addTask } = useTaskManager();
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+
+  const handleAddTask = () => {
+    try {
+      addTask(title, description);
+      setTitle('');
+      setDescription('');
+    } catch (error) {
+      Alert.alert('Error', (error as Error).message);
+    }
+  };
+
   const renderTask = ({ item }: { item: Task }) => (
     <View style={styles.taskContainer}>
       <Text style={styles.title}>{item.title}</Text>
@@ -31,8 +30,25 @@ const TaskList: React.FC = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>Task List</Text>
+
+      <View style={styles.form}>
+        <TextInput
+          style={styles.input}
+          placeholder="Task Title"
+          value={title}
+          onChangeText={setTitle}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Task Description"
+          value={description}
+          onChangeText={setDescription}
+        />
+        <Button title="Add Task" onPress={handleAddTask} />
+      </View>
+
       <FlatList
-        data={mockTasks}
+        data={tasks}
         renderItem={renderTask}
         keyExtractor={(item) => item.id.toString()}
       />
@@ -50,6 +66,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 16,
     textAlign: 'center',
+  },
+  form: {
+    marginBottom: 16,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 8,
+    padding: 8,
+    marginBottom: 8,
   },
   taskContainer: {
     backgroundColor: '#fff',
