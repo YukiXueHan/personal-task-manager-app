@@ -25,12 +25,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 8,
     padding: 16,
+    //paddingBottom: 46,
     marginBottom: 12,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    elevation: 2,
     position: 'relative',
   },
   title: {
@@ -43,10 +43,36 @@ const styles = StyleSheet.create({
     color: '#666',
     marginBottom: 8,
   },
+  status: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
+  completed: {
+    color: 'green',
+    fontWeight: 'bold',
+  },
+  pending: {
+    color: 'orange',
+    fontWeight: 'bold',
+  },
   actionButtons: {
+    position: 'absolute',
+    bottom: 8,
+    right: 8,
     flexDirection: 'row',
-    justifyContent: 'flex-end',
-    marginTop: 8,
+    alignItems: 'center',
+  },
+  toggleButton: {
+    backgroundColor: '#ffa500',
+    padding: 8,
+    borderRadius: 4,
+    marginRight: 8,
+  },
+  toggleButtonText: {
+    color: '#fff',
+    textAlign: 'center',
+    fontWeight: 'bold',
   },
   editButton: {
     backgroundColor: '#007bff',
@@ -58,7 +84,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ff4d4f',
     padding: 8,
     borderRadius: 4,
-  },
+  },  
   editButtonText: {
     color: '#fff',
     textAlign: 'center',

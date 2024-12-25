@@ -5,6 +5,7 @@ import {
   TextInput,
   Button,
   FlatList,
+  StyleSheet,
   Alert,
   TouchableOpacity,
   Modal,
@@ -12,12 +13,14 @@ import {
 import { useTaskManager, Task } from '@/hooks/useTaskManager';
 import { useTaskEditor } from '@/hooks/useTaskEditor';
 import { useTaskDeleter } from '@/hooks/useTaskDeleter';
-import styles from './TaskList.styles'; // Import styles
+import { useTaskToggler } from '@/hooks/useTaskToggler';
+import styles from './TaskList.styles';
 
 const TaskList: React.FC = () => {
   const { tasks, addTask, setTasks } = useTaskManager();
   const { editTask } = useTaskEditor(tasks, setTasks);
   const { deleteTask } = useTaskDeleter(tasks, setTasks);
+  const { toggleTaskStatus } = useTaskToggler(tasks, setTasks);
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -58,11 +61,26 @@ const TaskList: React.FC = () => {
     deleteTask(id);
   };
 
+  const handleToggleTaskStatus = (id: number) => {
+    toggleTaskStatus(id);
+  };
+
   const renderTask = ({ item }: { item: Task }) => (
     <View style={styles.taskContainer}>
       <Text style={styles.title}>{item.title}</Text>
       <Text style={styles.description}>{item.description}</Text>
+      <Text style={styles.status}>
+        Status: <Text style={item.status === 'completed' ? styles.completed : styles.pending}>{item.status}</Text>
+      </Text>
       <View style={styles.actionButtons}>
+        <TouchableOpacity
+          style={styles.toggleButton}
+          onPress={() => handleToggleTaskStatus(item.id)}
+        >
+          <Text style={styles.toggleButtonText}>
+            {item.status === 'completed' ? 'Mark as Pending' : 'Mark as Completed'}
+          </Text>
+        </TouchableOpacity>
         <TouchableOpacity
           style={styles.editButton}
           onPress={() => openEditModal(item)}
