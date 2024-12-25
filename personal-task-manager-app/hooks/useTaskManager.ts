@@ -14,8 +14,8 @@ export const useTaskManager = () => {
   ]);
 
   const addTask = (title: string, description: string) => {
-    if (title.trim() === '' || description.trim() === '') {
-      throw new Error('Both title and description are required.');
+    if (!title.trim() || !description.trim()) {
+      throw new Error('Title and description are required.');
     }
 
     const newTask: Task = {
@@ -28,5 +28,5 @@ export const useTaskManager = () => {
     setTasks([...tasks, newTask]);
   };
 
-  return { tasks, addTask };
+  return { tasks, addTask, setTasks };
 };
